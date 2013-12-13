@@ -15,10 +15,26 @@
           localStorage['access_token'] = gapi.auth.getToken().access_token;
         });
       }
+
+      // Requires room slug matching div id
+      function setOccupied(roomName) {
+        room = document.getElementById(roomName);
+        room.className = 'occupied';
+      }
     </script>
+    <link rel="stylesheet" href="main.css" type="text/css" />
   </head>
 
   <body>
     <button onclick="auth();">Authorize</button>
+    <div id="floorplan">
+      <div id="west-bay">West Bay</div>
+      <div id="winery">Winery</div>
+      <div id="mcgettigan">McGettigan</div>
+      <div id="laylin">Laylin</div>
+      <div id="blue-hole">Blue Hole</div>
+      <div id="bag-the-moon">Bag the Moon</div>
+      <div id="treehouse">Treehouse</div>
+    </div>
   </body>
 </html>

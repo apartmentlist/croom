@@ -1,0 +1,58 @@
+div#floorplan {
+  position: relative;
+  height: 465px;
+  width: 1000px;
+  background-image: url('layout.png');
+  background-size: contain;
+  margin: 0 auto;
+  font-family: arial;
+  font-size: 14px;
+  font-weight: bold;
+  color: green;
+}
+
+div#west-bay {
+  position: absolute;
+  top: 25px;
+  left: 23px;
+}
+
+div#winery {
+  position: absolute;
+  top: 25px;
+  left: 291px; 
+}
+
+div#mcgettigan {
+  position: absolute;
+  top: 25px;
+  left: 418px;
+}
+
+div#laylin {
+  position: absolute;
+  top: 235px;
+  left: 23px;
+}
+
+div#blue-hole {
+  position: absolute;
+  top: 235px;
+  left: 291px;
+}
+
+div#bag-the-moon {
+  position: absolute;
+  top: 235px;
+  left: 418px;
+}
+
+div#treehouse {
+  position: absolute;
+  top: 185px;
+  left: 630px;
+}
+
+div.occupied {
+  color: red;
+}
