@@ -7,7 +7,8 @@
       function auth() {
         var config = {
           'client_id': '352455586725-d6t9jg1soigo36ggqgs7qgn6avjl9ek7.apps.googleusercontent.com',
-          'scope': 'https://www.googleapis.com/auth/calendar.readonly'
+          'scope': 'https://www.googleapis.com/auth/calendar.readonly',
+          'hd': 'verticalbrands.com'
         };
         gapi.auth.authorize(config, function() {
           console.log('login complete');
