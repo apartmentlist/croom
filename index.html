@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Croom</title>
+    <script src="https://apis.google.com/js/client.js"></script>
+    <script>
+      function auth() {
+        var config = {
+          'client_id': '352455586725-d6t9jg1soigo36ggqgs7qgn6avjl9ek7.apps.googleusercontent.com',
+          'scope': 'https://www.googleapis.com/auth/calendar.readonly'
+        };
+        gapi.auth.authorize(config, function() {
+          console.log('login complete');
+          localStorage['access_token'] = gapi.auth.getToken().access_token;
+        });
+      }
+    </script>
+  </head>
+
+  <body>
+    <button onclick="auth();">Authorize</button>
+  </body>
+</html>
