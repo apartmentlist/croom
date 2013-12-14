@@ -4,7 +4,12 @@ var Croom = (function() {
   var APPS_DOMAIN = 'verticalbrands.com';
 
   var init = function() {
-    $('#authorize').click(auth);
+    var authBtn = $('#authorize');
+    if (localStorage.access_token) {
+      authBtn.remove();
+    } else {
+      authBtn.click(auth);
+    }
   };
 
   var auth = function() {
@@ -13,8 +18,8 @@ var Croom = (function() {
       'scope': OAUTH_SCOPE,
       'hd': APPS_DOMAIN
     }, function() {
-      console.log('Logged in');
       localStorage.access_token = gapi.auth.getToken().access_token;
+      window.location = window.location; // Reload the page
     });
   };
 
