@@ -3,30 +3,13 @@
   <head>
     <title>Croom</title>
     <script src="https://apis.google.com/js/client.js"></script>
-    <script>
-      function auth() {
-        var config = {
-          'client_id': '352455586725-d6t9jg1soigo36ggqgs7qgn6avjl9ek7.apps.googleusercontent.com',
-          'scope': 'https://www.googleapis.com/auth/calendar.readonly',
-          'hd': 'verticalbrands.com'
-        };
-        gapi.auth.authorize(config, function() {
-          console.log('login complete');
-          localStorage['access_token'] = gapi.auth.getToken().access_token;
-        });
-      }
-
-      // Requires room slug matching div id
-      function setOccupied(roomName) {
-        room = document.getElementById(roomName);
-        room.className = 'occupied';
-      }
-    </script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+    <script src="croom.js"></script>
     <link rel="stylesheet" href="main.css" type="text/css" />
   </head>
 
   <body>
-    <button onclick="auth();">Authorize</button>
+    <button id="authorize">Authorize</button>
     <div id="floorplan">
       <div id="west-bay">West Bay</div>
       <div id="winery">Winery</div>
