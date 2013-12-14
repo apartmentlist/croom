@@ -4,13 +4,18 @@ var Croom = (function() {
   var APPS_DOMAIN = 'verticalbrands.com';
 
   var init = function() {
-    var authBtn = $('#authorize');
-    if (localStorage.access_token) {
-      authBtn.remove();
-    } else {
-      authBtn.click(auth);
-    }
+    loadGoogleClients();
+    initAuthButton();
   };
+
+  // Requires room slug matching div id
+  var setOccupied = function(roomName) {
+    var room = document.getElementById(roomName);
+    room.className = 'occupied';
+  };
+
+
+  // Private
 
   var auth = function() {
     gapi.auth.authorize({
@@ -23,17 +28,29 @@ var Croom = (function() {
     });
   };
 
-  // Requires room slug matching div id
-  var setOccupied = function(roomName) {
-    var room = document.getElementById(roomName);
-    room.className = 'occupied';
+  var initAuthButton = function() {
+    var authBtn = $('#authorize');
+    if (localStorage.access_token) {
+      authBtn.remove();
+    } else {
+      authBtn.click(auth);
+    }
   };
+
+  var loadGoogleClients = function() {
+    gapi.client.load('calendar', 'v3', function() {
+      console.log("Calendar loaded");
+    });
+  };
+
+  // API
 
   return {
     init: init,
-    auth: auth,
     setOccupied: setOccupied
   };
 })();
 
-$(Croom.init);
+function googleReady() {
+  Croom.init();
+}
