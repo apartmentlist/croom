@@ -1,11 +1,15 @@
+/*global gapi */
+
 var Croom = (function() {
   var CLIENT_ID = '352455586725-d6t9jg1soigo36ggqgs7qgn6avjl9ek7.apps.googleusercontent.com';
+  var API_KEY = 'AIzaSyDVUkeBHaf9IOX91V5cEtNORcGhPoZsfPE';
   var OAUTH_SCOPE = 'https://www.googleapis.com/auth/calendar.readonly';
   var APPS_DOMAIN = 'verticalbrands.com';
 
   var init = function() {
+    gapi.client.setApiKey(API_KEY);
     loadGoogleClients();
-    initAuthButton();
+    auth(true, logIn);
   };
 
   // Requires room slug matching div id
@@ -17,23 +21,42 @@ var Croom = (function() {
 
   // Private
 
-  var auth = function() {
+  var auth = function(immediate, callback) {
     gapi.auth.authorize({
-      'client_id': CLIENT_ID,
-      'scope': OAUTH_SCOPE,
-      'hd': APPS_DOMAIN
-    }, function() {
-      localStorage.access_token = gapi.auth.getToken().access_token;
-      window.location = window.location; // Reload the page
+      'client_id' : CLIENT_ID,
+      'scope'     : OAUTH_SCOPE,
+      'hd'        : APPS_DOMAIN,
+      'immediate' : immediate
+    }, function(authResult) {
+      if (authResult && !authResult.error) {
+        localStorage.access_token = gapi.auth.getToken().access_token;
+      }
+      return (typeof(callback) === 'function') && callback(authResult);
     });
+  };
+
+  var getCalendars = function() {
+    if (!localStorage.access_token) return;
+    gapi.client.calendar.calendarList.list().execute(function(result) {
+      $.each(result.items, function(i, calendar) {
+        if (calendar.id.match(/resource/)) {
+          console.log(calendar.summary, calendar.id);
+        }
+      });
+    });
+  };
+
+  var displayAuth = function(evt) {
+    auth(false, logIn);
   };
 
   var initAuthButton = function() {
     var authBtn = $('#authorize');
     if (localStorage.access_token) {
-      authBtn.remove();
+      authBtn.hide();
     } else {
-      authBtn.click(auth);
+      authBtn.show();
+      authBtn.click(displayAuth);
     }
   };
 
@@ -41,6 +64,11 @@ var Croom = (function() {
     gapi.client.load('calendar', 'v3', function() {
       console.log("Calendar loaded");
     });
+  };
+
+  var logIn = function(authResult) {
+    initAuthButton();
+    getCalendars();
   };
 
   // API

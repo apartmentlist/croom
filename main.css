@@ -20,7 +20,7 @@ div#west-bay {
 div#winery {
   position: absolute;
   top: 25px;
-  left: 291px; 
+  left: 291px;
 }
 
 div#mcgettigan {
@@ -51,6 +51,10 @@ div#treehouse {
   position: absolute;
   top: 185px;
   left: 630px;
+}
+
+#authorize {
+  display: none;
 }
 
 div.occupied {
