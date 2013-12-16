@@ -9,46 +9,45 @@
   font-size: 14px;
 }
 
-#westbay {
+.room {
   position: absolute;
-  top: 25px;
-  left: 23px;
+  padding: 0 10px;
+  height: 208px;
 }
 
-#winery {
-  position: absolute;
-  top: 25px;
-  left: 291px;
+.room.big {
+  width: 239px;
 }
 
-#mcgettigan {
-  position: absolute;
-  top: 25px;
-  left: 418px;
+.room.small {
+  width: 101px;
 }
 
-#laylin {
-  position: absolute;
-  top: 235px;
-  left: 23px;
+.room.top {
+  top: 16px;
 }
 
-#bluehole {
-  position: absolute;
-  top: 235px;
-  left: 291px;
+.room.bottom {
+  top: 230px;
 }
 
-#bagthemoon {
-  position: absolute;
-  top: 235px;
-  left: 418px;
+.room.left {
+  left: 17px;
+}
+
+.room.center {
+  left: 282px;
+}
+
+.room.right {
+  left: 408px;
 }
 
 #treehouse {
-  position: absolute;
-  top: 185px;
-  left: 630px;
+  top: 178px;
+  left: 621px;
+  width: 344px;
+  height: 259px;
 }
 
 #authorize {
@@ -60,9 +59,9 @@
 }
 
 .free {
-  color: green;
+  background-color: rgba(100, 200, 100, .5);
 }
 
 .occupied {
-  color: red;
+  background-color: rgba(200, 100, 100, .5);
 }
