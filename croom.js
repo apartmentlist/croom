@@ -6,10 +6,21 @@ var Croom = (function() {
   var OAUTH_SCOPE = 'https://www.googleapis.com/auth/calendar.readonly';
   var APPS_DOMAIN = 'verticalbrands.com';
 
+  var CALENDARS = {
+    'Bag the Moon' : 'verticalbrands.com_2d32383736393530322d393632@resource.calendar.google.com',
+    'Blue Hole'    : 'verticalbrands.com_2d34333532313038332d373431@resource.calendar.google.com',
+    'Laylin'       : 'verticalbrands.com_32383433393832383630@resource.calendar.google.com',
+    'McGettigan'   : 'verticalbrands.com_3837383837353933353131@resource.calendar.google.com',
+    'Treehouse'    : 'verticalbrands.com_3335333533383139343430@resource.calendar.google.com',
+    'West Bay'     : 'verticalbrands.com_2d38373232393033372d343831@resource.calendar.google.com',
+    'Winery'       : 'verticalbrands.com_393735353630332d3939@resource.calendar.google.com'
+  };
+
   var init = function() {
     gapi.client.setApiKey(API_KEY);
-    loadGoogleClients();
-    auth(true, logIn);
+    loadGoogleClients(function() {
+      auth(true, logIn);
+    });
   };
 
   // Requires room slug matching div id
@@ -35,14 +46,24 @@ var Croom = (function() {
     });
   };
 
-  var getCalendars = function() {
+  var availabilityQuery = function(id) {
+    var now  = new Date();
+    var soon = new Date(now.getTime() + 1000);
+
+    return {
+      calendarId: id,
+      timeMin: now,
+      timeMax: soon
+    };
+  };
+
+  var getAvailability = function() {
     if (!localStorage.access_token) return;
-    gapi.client.calendar.calendarList.list().execute(function(result) {
-      $.each(result.items, function(i, calendar) {
-        if (calendar.id.match(/resource/)) {
-          console.log(calendar.summary, calendar.id);
-        }
-      });
+
+    $.each(CALENDARS, function(name, id) {
+      gapi.client.calendar.events
+        .list(availabilityQuery(id))
+        .execute(displayAvailability);
     });
   };
 
@@ -60,15 +81,27 @@ var Croom = (function() {
     }
   };
 
-  var loadGoogleClients = function() {
-    gapi.client.load('calendar', 'v3', function() {
-      console.log("Calendar loaded");
-    });
+  var loadGoogleClients = function(callback) {
+    gapi.client.load('calendar', 'v3', callback);
   };
 
   var logIn = function(authResult) {
     initAuthButton();
-    getCalendars();
+    getAvailability();
+    setInterval(getAvailability, 60 * 1000); // Referesh every minute
+  };
+
+  var displayAvailability = function(eventData) {
+    var calName = eventData.result.summary;
+    var calEvent = eventData.result.items && eventData.result.items[0];
+    var room = $('#' + calName.replace(/\s+/g, '').toLowerCase());
+    if (calEvent && calEvent.kind === 'calendar#event') {
+      room.removeClass('free').addClass('occupied');
+      room.find('.event').text(calEvent.summary);
+    } else {
+      room.removeClass('occupied').addClass('free');
+      room.find('.event').text('');
+    }
   };
 
   // API

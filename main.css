@@ -1,4 +1,4 @@
-div#floorplan {
+.floorplan {
   position: relative;
   height: 465px;
   width: 1000px;
@@ -7,47 +7,45 @@ div#floorplan {
   margin: 0 auto;
   font-family: arial;
   font-size: 14px;
-  font-weight: bold;
-  color: green;
 }
 
-div#west-bay {
+#westbay {
   position: absolute;
   top: 25px;
   left: 23px;
 }
 
-div#winery {
+#winery {
   position: absolute;
   top: 25px;
   left: 291px;
 }
 
-div#mcgettigan {
+#mcgettigan {
   position: absolute;
   top: 25px;
   left: 418px;
 }
 
-div#laylin {
+#laylin {
   position: absolute;
   top: 235px;
   left: 23px;
 }
 
-div#blue-hole {
+#bluehole {
   position: absolute;
   top: 235px;
   left: 291px;
 }
 
-div#bag-the-moon {
+#bagthemoon {
   position: absolute;
   top: 235px;
   left: 418px;
 }
 
-div#treehouse {
+#treehouse {
   position: absolute;
   top: 185px;
   left: 630px;
@@ -57,6 +55,14 @@ div#treehouse {
   display: none;
 }
 
-div.occupied {
+.floorplan .name {
+  font-weight: bold;
+}
+
+.free {
+  color: green;
+}
+
+.occupied {
   color: red;
 }
